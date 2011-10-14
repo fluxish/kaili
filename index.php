@@ -27,6 +27,7 @@ $post_call = function() {
 // Initialize the Loader and register autoloader
 Loader::get_instance()->register();
 
+    throw new Kaili\Exception('Message of this exception.');
 // Initialize Request object to handle the request
 \Kaili\Request::factory()->handle($pre_call, $post_call);
 
