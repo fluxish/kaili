@@ -106,13 +106,12 @@ class Response
     }
 
     /**
-     * Flush all response buffer
+     * Send the response
      */
     public function send($status_code = 200)
     {
-        $server_protocol = Kaili\Request::current()->server('SERVER_PROTOCOL') 
-            ? Kaili\Request::current()->server('SERVER_PROTOCOL') : 'HTTP/1.1';
-        header($server_protocol.' '.$status_code.' '.$this->_statuses[$status_code]);
+        // Set the http protocol and the status
+        $this->set_protocol($status_code);
         
         // TODO: manage various content types
         $this->set_content_type('text/html');
@@ -130,6 +129,13 @@ class Response
     public function set_header($header)
     {
         $this->_headers[] = $header;
+    }
+    
+    public function set_protocol($status_code)
+    {
+        $server_protocol = Request::current()->server('SERVER_PROTOCOL') 
+            ? Request::current()->server('SERVER_PROTOCOL') : 'HTTP/1.1';
+        header($server_protocol.' '.$status_code.' '.$this->_statuses[$status_code]);
     }
     
     /**
