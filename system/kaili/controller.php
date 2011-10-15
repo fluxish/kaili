@@ -35,7 +35,7 @@ class Controller
 
     function __destruct()
     {
-        $this->response->flush();
+        $this->response->send();
     }
 
 }

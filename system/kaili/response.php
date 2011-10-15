@@ -22,6 +22,67 @@ class Response
      * @var array
      */
     private $_headers;
+    
+    /**
+     * Response statuses
+     * @var array
+     */
+    private $_statuses = array(
+		100 => 'Continue',
+		101 => 'Switching Protocols',
+        102 => 'Processing',
+        103 => 'Checkpoint',
+        122 => 'Request-URI too long',
+		200 => 'OK',
+		201 => 'Created',
+		202 => 'Accepted',
+		203 => 'Non-Authoritative Information',
+		204 => 'No Content',
+		205 => 'Reset Content',
+		206 => 'Partial Content',
+		207 => 'Multi-Status',
+        226 => 'IM Used',
+		300 => 'Multiple Choices',
+		301 => 'Moved Permanently',
+		302 => 'Found',
+		303 => 'See Other',
+		304 => 'Not Modified',
+		305 => 'Use Proxy',
+		307 => 'Temporary Redirect',
+        308 => 'Resume Incomplete',
+		400 => 'Bad Request',
+		401 => 'Unauthorized',
+		402 => 'Payment Required',
+		403 => 'Forbidden',
+		404 => 'Not Found',
+		405 => 'Method Not Allowed',
+		406 => 'Not Acceptable',
+		407 => 'Proxy Authentication Required',
+		408 => 'Request Timeout',
+		409 => 'Conflict',
+		410 => 'Gone',
+		411 => 'Length Required',
+		412 => 'Precondition Failed',
+		413 => 'Request Entity Too Large',
+		414 => 'Request-URI Too Long',
+		415 => 'Unsupported Media Type',
+		416 => 'Requested Range Not Satisfiable',
+		417 => 'Expectation Failed',
+		422 => 'Unprocessable Entity',
+		423 => 'Locked',
+		424 => 'Failed Dependency',
+        425 => 'Unordered Collection',
+        426 => 'Upgrade Required',
+		500 => 'Internal Server Error',
+		501 => 'Not Implemented',
+		502 => 'Bad Gateway',
+		503 => 'Service Unavailable',
+		504 => 'Gateway Timeout',
+		505 => 'HTTP Version Not Supported',
+		507 => 'Insufficient Storage',
+		509 => 'Bandwidth Limit Exceeded',
+        510 => 'Not Extended'
+	);
 
     /**
      * Create a new Response object
@@ -47,8 +108,12 @@ class Response
     /**
      * Flush all response buffer
      */
-    public function flush()
+    public function send($status_code = 200)
     {
+        $server_protocol = Kaili\Request::current()->server('SERVER_PROTOCOL') 
+            ? Kaili\Request::current()->server('SERVER_PROTOCOL') : 'HTTP/1.1';
+        header($server_protocol.' '.$status_code.' '.$this->_statuses[$status_code]);
+        
         // TODO: manage various content types
         $this->set_content_type('text/html');
 
