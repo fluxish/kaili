@@ -131,11 +131,12 @@ class Response
         $this->_headers[] = $header;
     }
     
-    public function set_protocol($status_code)
+    public function set_protocol($protocol = null, $status_code = 200)
     {
-        $server_protocol = Request::current()->server('SERVER_PROTOCOL') 
-            ? Request::current()->server('SERVER_PROTOCOL') : 'HTTP/1.1';
-        header($server_protocol.' '.$status_code.' '.$this->_statuses[$status_code]);
+        if($protocol === null)
+            $protocol = Request::current()->server('SERVER_PROTOCOL') 
+                ? Request::current()->server('SERVER_PROTOCOL') : 'HTTP/1.1';
+        header($protocol.' '.$status_code.' '.$this->_statuses[$status_code]);
     }
     
     /**
