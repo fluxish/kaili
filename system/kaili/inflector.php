@@ -73,6 +73,13 @@ class Inflector
                 else
                     return substr($str, 0, -1).'ies';
                 break;
+            case 'h':
+                $l = substr($str, -2, 1);
+                if($l=='c' || $l=='s') return $str.'es';
+                break;
+            case 'f':
+            case 'x':
+            case 'z':
             case 's':
                 return $str.'es';
                 break;
