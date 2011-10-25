@@ -9,7 +9,17 @@ namespace Kaili;
  */
 class Inflector
 {
-
+    
+    public static function to_undescored($str)
+    {
+        return str_replace(array('-',' '), '_', $str);
+    }
+    
+    public static function undescoredToDashed($str)
+    {
+        return str_replace('_', '-', $str);
+    }
+    
     /**
      * Transform a word from plural to singular form
      * @param string $str a word
