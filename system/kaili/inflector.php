@@ -10,14 +10,25 @@ namespace Kaili;
 class Inflector
 {
     
-    public static function to_undescored($str)
+    public static function undescore($str)
     {
-        return str_replace(array('-',' '), '_', $str);
+        return static::stringify($str, '_');
     }
     
-    public static function undescoredToDashed($str)
+    public static function hyphenate($str)
     {
-        return str_replace('_', '-', $str);
+        return static::stringify($str, '-');
+    }
+    
+    public static function camelcase($str)
+    {
+        return preg_replace_callback('/[\W]+([\w]+)/', 
+                function($matches){return ucfirst($matches[0]);}, $str);
+    }
+    
+    public static function stringify($str, $sep)
+    {
+        return str_replace(array('-','_','.',',',':'), $sep, $str);
     }
     
     /**
