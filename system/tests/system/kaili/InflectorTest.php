@@ -116,7 +116,10 @@ class InflectorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testHyphenate().
+     * Test for Inflector::hyphenate()
+     * Test this method with a series of not hyphenated strings and returns 
+     * the correspondent hyphenated version.
+     * @test
      */
     public function test_hyphenate()
     {
@@ -134,32 +137,100 @@ class InflectorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testCamelcase().
+     * Test for Inflector::camelcase()
+     * Test this method with a series of not camelcased strings and returns 
+     * the correspondent camelcased version.
+     * @test
      */
-    public function testCamelcase()
+    public function test_camelcase()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
+        $input = array(
+            'this string is a test',
+            'this*string*is*a*test',
+            'this-string-is-a-test',
+            'this*string-is/a\test',
+            'this * string/(*is"$a+_ test',
         );
+        $output = 'thisStringIsATest';
+        foreach($input as $i){
+            $this->assertEquals($output, Inflector::camelcase($i, false));
+        }
+    }
+    
+    /**
+     * Test for Inflector::camelcase()
+     * Test this method with a series of not camelcased strings and returns 
+     * the correspondent camelcased version, with uppercased first letter.
+     * @test
+     */
+    public function test_camelcase_with_first_upper()
+    {
+        $input = array(
+            'this string is a test',
+            'this*string*is*a*test',
+            'this-string-is-a-test',
+            'this*string-is/a\test',
+            'this * string/(*is"$a+_ test',
+        );
+        $output = 'ThisStringIsATest';
+        foreach($input as $i){
+            $this->assertEquals($output, Inflector::camelcase($i, true));
+        }
     }
 
     
     /**
-     * @todo Implement testSingular().
+     * Test for Inflector::singular()
+     * Test this method with plural words ending in -s
+     * @test
      */
-    public function testSingular()
+    public function test_singular_s()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $input = 'tests';
+        $output = 'test';
+        $this->assertEquals($output, Inflector::singular($input));
+    }
+    
+    /**
+     * Test for Inflector::singular()
+     * Test this method with plural words ending in -es and singular ending in -s
+     * @test
+     */
+    public function test_singular_es()
+    {
+        $input = 'compasses';
+        $output = 'compass';
+        $this->assertEquals($output, Inflector::singular($input));
+    }
+    
+    /**
+     * Test for Inflector::singular()
+     * Test this method with plural words ending in -es and singular not ending in -s
+     * @test
+     */
+    public function test_singular_not_es()
+    {
+        $input = 'pages';
+        $output = 'page';
+        $this->assertEquals($output, Inflector::singular($input));
+    }
+    
+    /**
+     * Test for Inflector::singular()
+     * Test this method with plural words ending in -ies
+     * @test
+     */
+    public function test_singular_ies()
+    {
+        $input = 'colonies';
+        $output = 'colony';
+        $this->assertEquals($output, Inflector::singular($input));
     }
 
     /**
      * @todo Implement testPlural().
      */
-    public function testPlural()
+    public function test_plural()
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(

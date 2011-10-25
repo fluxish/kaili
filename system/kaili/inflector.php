@@ -19,18 +19,20 @@ class Inflector
     {
         return static::stringify($str, '-', $lower_case);
     }
-    
-    public static function camelcase($str)
-    {
-        return preg_replace_callback('/[\W]+([\w]+)/', 
-                function($matches){return ucfirst($matches[0]);}, $str);
-    }
-    
+
     public static function stringify($str, $sep, $lower_case = true)
     {
         $lower_case and $str = strtolower($str);
         var_dump($str);
         return preg_replace('/[\W\s\_]+/', $sep, $str);
+    }
+    
+    public static function camelcase($str, $first_upper = false)
+    {
+        $str = preg_replace_callback('/[\W\s\_]*([\w]+)/', 
+                function($matches){return ucfirst($matches[1]);}, $str);
+        !$first_upper and $str = lcfirst($str);
+        return $str;
     }
     
     /**
