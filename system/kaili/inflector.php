@@ -10,14 +10,14 @@ namespace Kaili;
 class Inflector
 {
     
-    public static function undescore($str)
+    public static function underscore($str, $lower_case = true)
     {
-        return static::stringify($str, '_');
+        return static::stringify($str, '_', $lower_case);
     }
     
-    public static function hyphenate($str)
+    public static function hyphenate($str, $lower_case = true)
     {
-        return static::stringify($str, '-');
+        return static::stringify($str, '-', $lower_case);
     }
     
     public static function camelcase($str)
@@ -26,9 +26,11 @@ class Inflector
                 function($matches){return ucfirst($matches[0]);}, $str);
     }
     
-    public static function stringify($str, $sep)
+    public static function stringify($str, $sep, $lower_case = true)
     {
-        return str_replace(array('-','_','.',',',':'), $sep, $str);
+        $lower_case and $str = strtolower($str);
+        var_dump($str);
+        return preg_replace('/[\W\s\_]+/', $sep, $str);
     }
     
     /**
