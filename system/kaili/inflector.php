@@ -9,17 +9,35 @@ namespace Kaili;
  */
 class Inflector
 {
-    
+    /**
+     * Underscorize the provided string
+     * @param string $str
+     * @param bool $lower_case set if the string must be returned in lower case or not
+     * @return string
+     */
     public static function underscore($str, $lower_case = true)
     {
         return static::stringify($str, '_', $lower_case);
     }
     
+    /**
+     * Hyphenate the provided string
+     * @param string $str
+     * @param bool $lower_case set if the string must be returned in lower case or not
+     * @return string
+     */
     public static function hyphenate($str, $lower_case = true)
     {
         return static::stringify($str, '-', $lower_case);
     }
-
+    
+    /**
+     * Stringify the provided string with a separator
+     * @param string $str
+     * @param string $sep the separator
+     * @param bool $lower_case set if the string must be returned in lower case or not
+     * @return string
+     */
     public static function stringify($str, $sep, $lower_case = true)
     {
         $lower_case and $str = strtolower($str);
@@ -27,6 +45,12 @@ class Inflector
         return preg_replace('/[\W\s\_]+/', $sep, $str);
     }
     
+    /**
+     * Camelize the provided string
+     * @param string $str
+     * @param bool $first_upper set if the first letter will be with upper case or not 
+     * @return string 
+     */
     public static function camelcase($str, $first_upper = false)
     {
         $str = preg_replace_callback('/[\W\s\_]*([\w]+)/', 
