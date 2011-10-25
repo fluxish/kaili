@@ -42,6 +42,9 @@ class Inflector
      */
     public static function singular($str)
     {
+        if($str === null)
+            throw new \InvalidArgumentException('A string is required');
+
         // singular rules
         $rules = array(
             '/(\w+)ies/' => '$1y', 
@@ -63,29 +66,8 @@ class Inflector
      */
     public static function plural($str)
     {
-        $str = strtolower($str);
-        $last_letter = substr($str, -1);
-        switch($last_letter) {
-            case 'y':
-                $vowels = array('a', 'e', 'i', 'o', 'u');
-                if(in_array(substr($str, -2, 1), $vowels))
-                    return $str.'s';
-                else
-                    return substr($str, 0, -1).'ies';
-                break;
-            case 'h':
-                $l = substr($str, -2, 1);
-                if($l=='c' || $l=='s') return $str.'es';
-                break;
-            case 'f':
-            case 'x':
-            case 'z':
-            case 's':
-                return $str.'es';
-                break;
-            default:
-                return $str.'s';
-        }
+        if($str === null)
+            throw new \InvalidArgumentException('A string is required');
         
         // plural rules
         $rules = array(

@@ -186,11 +186,32 @@ class InflectorTest extends \PHPUnit_Framework_TestCase
      */
     public function test_singular()
     {
-        $input = array('colonies','','buses','kisses','peaches','buzzes','dishes','boxes');
-        $output = array('colony','','bus','kiss','peach','buzz','dish','box');
+        $input = array('colonies','pages','buses','kisses','peaches','buzzes','dishes','boxes');
+        $output = array('colony','page','bus','kiss','peach','buzz','dish','box');
         foreach($input as $i=>$word){        
             $this->assertEquals($output[$i], Inflector::singular($word));
         };
+    }
+    
+    /**
+     * Test for Inflector::singular()
+     * Test this method with empty string and an empty string is expected
+     * @test
+     */
+    public function test_singular_empty()
+    {        
+        $this->assertEmpty(Inflector::singular(''));
+    }
+    
+    /**
+     * Test for Inflector::singular()
+     * Test this method with null value and throws an InvalidArgumentException
+     * @expectedException \InvalidArgumentException
+     * @test
+     */
+    public function test_singular_null()
+    {        
+        Inflector::singular(null);
     }
 
     /**
@@ -198,12 +219,33 @@ class InflectorTest extends \PHPUnit_Framework_TestCase
      */
     public function test_plural()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $input = array('colony','page','bus','kiss','peach','buzz','dish','box');
+        $output = array('colonies','pages','buses','kisses','peaches','buzzes','dishes','boxes');
+        foreach($input as $i=>$word){        
+            $this->assertEquals($output[$i], Inflector::plural($word));
+        };
     }
-
+    
+    /**
+     * Test for Inflector::plural()
+     * Test this method with empty string and an empty string is expected
+     * @test
+     */
+    public function test_plural_empty()
+    {        
+        $this->assertEmpty(Inflector::plural(''));
+    }
+    
+    /**
+     * Test for Inflector::plural()
+     * Test this method with null value and throws an InvalidArgumentException
+     * @expectedException \InvalidArgumentException
+     * @test
+     */
+    public function test_plural_null()
+    {        
+        Inflector::plural(null);
+    }
 }
 
 ?>
