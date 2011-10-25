@@ -184,47 +184,13 @@ class InflectorTest extends \PHPUnit_Framework_TestCase
      * Test this method with plural words ending in -s
      * @test
      */
-    public function test_singular_s()
+    public function test_singular()
     {
-        $input = 'tests';
-        $output = 'test';
-        $this->assertEquals($output, Inflector::singular($input));
-    }
-    
-    /**
-     * Test for Inflector::singular()
-     * Test this method with plural words ending in -es and singular ending in -s
-     * @test
-     */
-    public function test_singular_es()
-    {
-        $input = 'compasses';
-        $output = 'compass';
-        $this->assertEquals($output, Inflector::singular($input));
-    }
-    
-    /**
-     * Test for Inflector::singular()
-     * Test this method with plural words ending in -es and singular not ending in -s
-     * @test
-     */
-    public function test_singular_not_es()
-    {
-        $input = 'pages';
-        $output = 'page';
-        $this->assertEquals($output, Inflector::singular($input));
-    }
-    
-    /**
-     * Test for Inflector::singular()
-     * Test this method with plural words ending in -ies
-     * @test
-     */
-    public function test_singular_ies()
-    {
-        $input = 'colonies';
-        $output = 'colony';
-        $this->assertEquals($output, Inflector::singular($input));
+        $input = array('colonies','','buses','kisses','peaches','buzzes','dishes','boxes');
+        $output = array('colony','','bus','kiss','peach','buzz','dish','box');
+        foreach($input as $i=>$word){        
+            $this->assertEquals($output[$i], Inflector::singular($word));
+        };
     }
 
     /**

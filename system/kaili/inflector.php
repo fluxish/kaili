@@ -42,18 +42,18 @@ class Inflector
      */
     public static function singular($str)
     {
+        // singular rules
+        $rules = array(
+            '/(\w+)ies/' => '$1y', 
+            '/(\w+[f|x|z|ch|sh|s]{1})es/' => '$1', 
+            '/(\w+)s/' => '$1'
+        );
+        
         $str = strtolower($str);
-        $last_letters = substr($str, -3);
-        if($last_letters == 'ies')
-            return substr($str, 0, -3).'y';
-        else if($last_letters == 'ses')
-            return substr($str, 0, -2);
-        else {
-            $last_letters = substr($str, -1);
-            if($last_letters == 's')
-                return substr($str, 0, -1);
+        foreach($rules as $patt=>$repl){
+            if(preg_match($patt, $str))
+                return preg_replace($patt, $repl, $str);
         }
-        return $str;
     }
 
     /**
@@ -85,6 +85,20 @@ class Inflector
                 break;
             default:
                 return $str.'s';
+        }
+        
+        // plural rules
+        $rules = array(
+            '/(\w+[aeiou])y/' => '$1s', 
+            '/(\w+[^aeiou])y/' => '$1ies', 
+            '/(\w+[f|x|z|ch|sh|s])/' => '$1es', 
+            '/(\w+)/' => '$1s'
+        );
+        
+        $str = strtolower($str);
+        foreach($rules as $patt=>$repl){
+            if(preg_match($patt, $str))
+                return preg_replace($patt, $repl, $str);
         }
     }
 
